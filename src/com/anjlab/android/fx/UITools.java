@@ -85,15 +85,20 @@ public class UITools {
 		return (Spinner) ctx.findViewById(spinnerId);
 	}
 
-	public static void fillSpinner(Activity ctx, int id, int arrayId,
-			OnItemSelectedListener callback) {
+	public static void fillSpinner(Activity ctx, int id, int arrayId, 
+			int listItemResId, OnItemSelectedListener callback) {
 		Spinner s = (Spinner) ctx.findViewById(id);
 		ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(ctx, arrayId,
 				android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		adapter.setDropDownViewResource(listItemResId);
 		s.setAdapter(adapter);
 		if (callback != null)
 			s.setOnItemSelectedListener(callback);
+	}
+	
+	public static void fillSpinner(Activity ctx, int id, int arrayId,
+			OnItemSelectedListener callback) {
+		fillSpinner(ctx, id, arrayId, android.R.layout.simple_spinner_dropdown_item, callback);
 	}
 	
 	public static TextView getTextView(Activity ctx, int viewId) {

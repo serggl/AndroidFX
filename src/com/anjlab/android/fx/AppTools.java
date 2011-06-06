@@ -31,6 +31,18 @@ public class AppTools {
 		editor.commit();
 	}
 	
+	public static int getSettingsValueAsInt(Context ctx, String prefName, int defaultValue){
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
+		return preferences.getInt(prefName, defaultValue);
+	}
+	
+	public static void setSettingsValue(Context ctx, String prefName, int value){
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putInt(prefName, value);
+		editor.commit();
+	}
+	
 	public static void openAndroidMarket(Activity ctx){
 		ctx.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+ctx.getClass().getPackage().getName())));
 	}
