@@ -67,9 +67,9 @@ public class UITools {
 		return (Button) ctx.findViewById(buttonId);
 	}
 
-	public static void setButtonClickListener(Activity ctx, int buttonId,
+	public static void setOnClickListener(Activity ctx, int buttonId,
 			OnClickListener listener) {
-		getButton(ctx, buttonId).setOnClickListener(listener);
+		ctx.findViewById(buttonId).setOnClickListener(listener);
 	}
 	
 	public static Preference getPreference(PreferenceActivity ctx, CharSequence key) {

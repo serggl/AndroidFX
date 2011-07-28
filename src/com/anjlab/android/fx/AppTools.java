@@ -24,11 +24,12 @@ public class AppTools {
 		return preferences.getBoolean(prefName, defaultValue);
 	}
 	
+	private static SharedPreferences.Editor getSettingsEditor(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).edit();
+	}
+	
 	public static void setSettingsValue(Context ctx, String prefName, boolean value){
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
-		SharedPreferences.Editor editor = preferences.edit();
-		editor.putBoolean(prefName, value);
-		editor.commit();
+		getSettingsEditor(ctx).putBoolean(prefName, value).commit();
 	}
 	
 	public static int getSettingsValueAsInt(Context ctx, String prefName, int defaultValue){
@@ -37,10 +38,11 @@ public class AppTools {
 	}
 	
 	public static void setSettingsValue(Context ctx, String prefName, int value){
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
-		SharedPreferences.Editor editor = preferences.edit();
-		editor.putInt(prefName, value);
-		editor.commit();
+		getSettingsEditor(ctx).putInt(prefName, value).commit();
+	}
+	
+	public static void setSettingsValue(Context ctx, String prefName, String value){
+		getSettingsEditor(ctx).putString(prefName, value).commit();
 	}
 	
 	public static void openAndroidMarket(Activity ctx){
