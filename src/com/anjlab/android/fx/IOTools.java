@@ -5,12 +5,33 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 
 import android.util.Log;
 
 public class IOTools {
 
 	public static byte[] readFileBytesFromInputStream(InputStream is) {
+		try {
+			WeakReference<ByteArrayOutputStream> buffer = new WeakReference<ByteArrayOutputStream>(new ByteArrayOutputStream());
+
+			int nRead;
+			byte[] data = new byte[16384];
+
+			while ((nRead = is.read(data, 0, data.length)) != -1) {
+				buffer.get().write(data, 0, nRead);
+			}
+
+			buffer.get().flush();
+
+			return buffer.get().toByteArray();
+		} catch (IOException e) {
+			Log.e("IOTools", e.toString());
+			return null;
+		}
+	}
+	
+	public static ByteArrayOutputStream readFileBytesFromInputStream2(InputStream is) {
 		try {
 			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
@@ -23,7 +44,7 @@ public class IOTools {
 
 			buffer.flush();
 
-			return buffer.toByteArray();
+			return buffer;
 		} catch (IOException e) {
 			Log.e("IOTools", e.toString());
 			return null;

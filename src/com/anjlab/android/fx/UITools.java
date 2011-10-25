@@ -1,7 +1,9 @@
 package com.anjlab.android.fx;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
@@ -13,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -62,6 +65,10 @@ public class UITools {
 	public static CheckBox getCheckBox(Activity ctx, int buttonId) {
 		return (CheckBox) ctx.findViewById(buttonId);
 	}
+	
+	public static CheckBox getCheckBox(View ctx, int buttonId) {
+		return (CheckBox) ctx.findViewById(buttonId);
+	}
 
 	public static Button getButton(Activity ctx, int buttonId) {
 		return (Button) ctx.findViewById(buttonId);
@@ -105,6 +112,10 @@ public class UITools {
 		return (TextView) ctx.findViewById(viewId);
 	}
 	
+	public static EditText getEditText(View ctx, int viewId) {
+		return (EditText) ctx.findViewById(viewId);
+	}
+	
 	public static void setText(Activity ctx, int textViewId, int textId){
 		getTextView(ctx, textViewId).setText(textId);
 	}
@@ -133,4 +144,40 @@ public class UITools {
 	public static RelativeLayout getRelativeLayout(Activity ctx, int viewId) {
 		return (RelativeLayout) ctx.findViewById(viewId);
 	}
+	
+	public static AlertDialog createAlertDialog(Context ctx, String title, String message, int icon, 
+			boolean cancelable, String positiveButton, String negativeButton, DialogInterface.OnClickListener okClickListener, 
+			DialogInterface.OnClickListener cancelClickListener){
+    	AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
+    	alertDialog.setTitle(title);
+    	alertDialog.setMessage(message);
+    	alertDialog.setCancelable(cancelable);
+    	if (icon != 0)
+    		alertDialog.setIcon(icon);
+    	alertDialog.setPositiveButton(positiveButton, okClickListener);
+    	if (negativeButton != null)
+    		alertDialog.setNegativeButton(negativeButton, cancelClickListener);
+    	return alertDialog.create();
+    }
+	
+	public static void showAlertDialog(Context ctx, String title, String message, int icon, 
+			String positiveButton, String negativeButton, DialogInterface.OnClickListener okClickListener, 
+			DialogInterface.OnClickListener cancelClickListener){
+		createAlertDialog(ctx, title, message, icon, false, positiveButton, negativeButton, okClickListener, cancelClickListener).show();
+    }
+	
+	public static void showAlertDialog(Context ctx, int title, int message, int icon,
+			int positiveButton, int negativeButton, DialogInterface.OnClickListener okClickListener, 
+			DialogInterface.OnClickListener cancelClickListener){
+    	showAlertDialog(ctx, ctx.getString(title), ctx.getString(message), icon, ctx.getString(positiveButton), 
+    			ctx.getString(negativeButton), okClickListener, cancelClickListener);
+    }
+	
+
+	
+	public static void showAlertDialog(Context ctx, int title, int message, int icon,
+			int positiveButton, DialogInterface.OnClickListener okClickListener) {
+    	showAlertDialog(ctx, ctx.getString(title), ctx.getString(message), icon, ctx.getString(positiveButton), 
+    			null, okClickListener, null);
+    }
 }
