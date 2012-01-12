@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,12 +21,14 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class UITools {
 	
@@ -60,6 +65,23 @@ public class UITools {
 	
 	public static void show(Activity ctx, int viewId) {
 		ctx.findViewById(viewId).setVisibility(View.VISIBLE);
+	}
+	
+	public static void removeFromParentView(Activity ctx, int viewId) {
+		View v = ctx.findViewById(viewId);
+		if (v != null){
+			ViewParent parent = v.getParent();
+			if (parent instanceof ViewGroup)
+				((ViewGroup)parent).removeView(v);	
+		}
+	}
+	
+	public static boolean hasView(Activity ctx, int viewId) {
+		return ctx.findViewById(viewId) != null;
+	}
+	
+	public static ListView getListView(Activity ctx, int buttonId) {
+		return (ListView) ctx.findViewById(buttonId);
 	}
 	
 	public static CheckBox getCheckBox(Activity ctx, int buttonId) {
@@ -116,6 +138,14 @@ public class UITools {
 		return (EditText) ctx.findViewById(viewId);
 	}
 	
+	public static EditText getEditText(Activity ctx, int viewId) {
+		return (EditText) ctx.findViewById(viewId);
+	}
+	
+	public static String getEditTextText(Activity ctx, int viewId) {
+		return getEditText(ctx, viewId).getText().toString();
+	}
+	
 	public static void setText(Activity ctx, int textViewId, int textId){
 		getTextView(ctx, textViewId).setText(textId);
 	}
@@ -143,6 +173,18 @@ public class UITools {
 	
 	public static RelativeLayout getRelativeLayout(Activity ctx, int viewId) {
 		return (RelativeLayout) ctx.findViewById(viewId);
+	}
+	
+	public static ToggleButton getToggleButton(Activity ctx, int buttonId) {
+		return (ToggleButton) ctx.findViewById(buttonId);
+	}
+	
+	public static boolean getToggleButtonState(Activity ctx, int buttonId) {
+		return getToggleButton(ctx, buttonId).isChecked();
+	}
+	
+	public static void setToggleButtonState(Activity ctx, int buttonId, boolean checked) {
+		getToggleButton(ctx, buttonId).setChecked(checked);
 	}
 	
 	public static AlertDialog createAlertDialog(Context ctx, String title, String message, int icon, 
@@ -173,11 +215,31 @@ public class UITools {
     			ctx.getString(negativeButton), okClickListener, cancelClickListener);
     }
 	
-
-	
 	public static void showAlertDialog(Context ctx, int title, int message, int icon,
 			int positiveButton, DialogInterface.OnClickListener okClickListener) {
     	showAlertDialog(ctx, ctx.getString(title), ctx.getString(message), icon, ctx.getString(positiveButton), 
     			null, okClickListener, null);
     }
+	
+	public static void applyCustomRegularBoldFont(Activity ctx, ViewGroup rootView, String regularFontPath, String boldFontPath) {
+		Typeface regular = Typeface.createFromAsset(ctx.getAssets(), regularFontPath);
+		Typeface bold = Typeface.createFromAsset(ctx.getAssets(), boldFontPath);
+
+		for(int i = 0; i <rootView.getChildCount(); i++) {
+			View v = rootView.getChildAt(i);
+			if(v instanceof TextView ) {
+				Typeface t = ((TextView)v).getTypeface();
+				if (t != null)
+				((TextView)v).setTypeface(t.isBold() ? bold : regular);
+			} else if(v instanceof Button) {
+				Typeface t = ((Button)v).getTypeface();
+				((Button)v).setTypeface(t.isBold() ? bold : regular);
+			} else if(v instanceof EditText) {
+				Typeface t = ((EditText)v).getTypeface();
+				((EditText)v).setTypeface(t.isBold() ? bold : regular);
+			} else if(v instanceof ViewGroup) {
+				applyCustomRegularBoldFont(ctx, (ViewGroup)v, regularFontPath, boldFontPath);
+			}
+		}
+	}
 }
