@@ -67,9 +67,38 @@ public class UITools {
 		ctx.findViewById(viewId).setVisibility(View.VISIBLE);
 	}
 	
+	public static void collapse(View view) {
+		if (view != null) {
+			ViewGroup.LayoutParams lp = view.getLayoutParams();
+			lp.height = 0;
+			view.setLayoutParams(lp);
+		}
+	}
+	
+	public static void collapse(Activity ctx, int viewId) {
+		hide(ctx, viewId);
+		collapse(ctx.findViewById(viewId));
+	}
+	
+	public static void expand(View view, boolean fillParent) {
+		if (view != null) {
+			ViewGroup.LayoutParams lp = view.getLayoutParams();
+			lp.height = fillParent ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT;
+			view.setLayoutParams(lp);
+		}
+	}
+	
+	public static void expand(Activity ctx, int viewId, boolean fillParent) {
+		expand(ctx.findViewById(viewId), fillParent);
+		show(ctx, viewId);
+	}
+	
 	public static void removeFromParentView(Activity ctx, int viewId) {
-		View v = ctx.findViewById(viewId);
-		if (v != null){
+		removeFromParentView(ctx.findViewById(viewId));
+	}
+	
+	public static void removeFromParentView(View v) {
+		if (v != null) {
 			ViewParent parent = v.getParent();
 			if (parent instanceof ViewGroup)
 				((ViewGroup)parent).removeView(v);	
@@ -90,6 +119,10 @@ public class UITools {
 	
 	public static CheckBox getCheckBox(View ctx, int buttonId) {
 		return (CheckBox) ctx.findViewById(buttonId);
+	}
+	
+	public static void setCheckBoxChecked(Activity ctx, int buttonId, boolean checked) {
+		getCheckBox(ctx, buttonId).setChecked(checked);
 	}
 
 	public static Button getButton(Activity ctx, int buttonId) {
@@ -131,6 +164,10 @@ public class UITools {
 	}
 	
 	public static TextView getTextView(Activity ctx, int viewId) {
+		return (TextView) ctx.findViewById(viewId);
+	}
+	
+	public static TextView getTextView(View ctx, int viewId) {
 		return (TextView) ctx.findViewById(viewId);
 	}
 	
@@ -230,7 +267,7 @@ public class UITools {
 			if(v instanceof TextView ) {
 				Typeface t = ((TextView)v).getTypeface();
 				if (t != null)
-				((TextView)v).setTypeface(t.isBold() ? bold : regular);
+					((TextView)v).setTypeface(t.isBold() ? bold : regular);
 			} else if(v instanceof Button) {
 				Typeface t = ((Button)v).getTypeface();
 				((Button)v).setTypeface(t.isBold() ? bold : regular);
