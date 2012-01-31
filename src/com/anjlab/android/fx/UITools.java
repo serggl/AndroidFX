@@ -212,6 +212,10 @@ public class UITools {
 		return (RelativeLayout) ctx.findViewById(viewId);
 	}
 	
+	public static ImageView getImageView(Activity ctx, int viewId) {
+		return (ImageView) ctx.findViewById(viewId);
+	}
+	
 	public static ToggleButton getToggleButton(Activity ctx, int buttonId) {
 		return (ToggleButton) ctx.findViewById(buttonId);
 	}
