@@ -17,6 +17,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -109,6 +110,18 @@ public class UITools {
 		return ctx.findViewById(viewId) != null;
 	}
 	
+	public static void setEnabled(Activity ctx, int viewId, boolean enabled) {
+		View v = ctx.findViewById(viewId);
+		if (v != null)
+			v.setEnabled(enabled);
+	}
+	
+	public static void setVisible(Activity ctx, int viewId, boolean visible) {
+		View v = ctx.findViewById(viewId);
+		if (v != null)
+			v.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+	}
+	
 	public static ListView getListView(Activity ctx, int buttonId) {
 		return (ListView) ctx.findViewById(buttonId);
 	}
@@ -123,6 +136,18 @@ public class UITools {
 	
 	public static void setCheckBoxChecked(Activity ctx, int buttonId, boolean checked) {
 		getCheckBox(ctx, buttonId).setChecked(checked);
+	}
+	
+	public static CheckedTextView getCheckedTextView(Activity ctx, int buttonId) {
+		return (CheckedTextView) ctx.findViewById(buttonId);
+	}
+	
+	public static boolean getCheckedTextViewChecked(Activity ctx, int buttonId) {
+		return getCheckedTextView(ctx, buttonId).isChecked();
+	}
+	
+	public static void setCheckedTextViewChecked(Activity ctx, int buttonId, boolean checked) {
+		getCheckedTextView(ctx, buttonId).setChecked(checked);
 	}
 
 	public static Button getButton(Activity ctx, int buttonId) {
@@ -262,7 +287,7 @@ public class UITools {
     			null, okClickListener, null);
     }
 	
-	public static void applyCustomRegularBoldFont(Activity ctx, ViewGroup rootView, String regularFontPath, String boldFontPath) {
+	public static void applyCustomRegularBoldFont(Context ctx, ViewGroup rootView, String regularFontPath, String boldFontPath) {
 		Typeface regular = Typeface.createFromAsset(ctx.getAssets(), regularFontPath);
 		Typeface bold = Typeface.createFromAsset(ctx.getAssets(), boldFontPath);
 
