@@ -24,12 +24,21 @@ public class AppTools {
 		return preferences.getBoolean(prefName, defaultValue);
 	}
 	
+	public static float getSettingsValueAsFloat(Context ctx, String prefName, float defaultValue){
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
+		return preferences.getFloat(prefName, defaultValue);
+	}
+	
 	private static SharedPreferences.Editor getSettingsEditor(Context ctx){
 		return PreferenceManager.getDefaultSharedPreferences(ctx).edit();
 	}
 	
 	public static void setSettingsValue(Context ctx, String prefName, boolean value){
 		getSettingsEditor(ctx).putBoolean(prefName, value).commit();
+	}
+	
+	public static void setSettingsValue(Context ctx, String prefName, float value){
+		getSettingsEditor(ctx).putFloat(prefName, value).commit();
 	}
 	
 	public static int getSettingsValueAsInt(Context ctx, String prefName, int defaultValue){

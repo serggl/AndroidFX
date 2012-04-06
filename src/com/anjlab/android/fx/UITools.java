@@ -11,6 +11,7 @@ import android.preference.PreferenceActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -307,5 +308,10 @@ public class UITools {
 				applyCustomRegularBoldFont(ctx, (ViewGroup)v, regularFontPath, boldFontPath);
 			}
 		}
+	}
+	
+	public static void hideKeyboard(Activity activity, int buttonId)
+	{
+		((InputMethodManager)activity.getSystemService("input_method")).hideSoftInputFromWindow(activity.findViewById(buttonId).getWindowToken(), 0);
 	}
 }
