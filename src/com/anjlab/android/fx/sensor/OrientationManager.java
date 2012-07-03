@@ -57,9 +57,9 @@ public class OrientationManager {
 				sensorManager = (SensorManager) ctx.getSystemService(Context.SENSOR_SERVICE);
 				List<Sensor> sensors = sensorManager.getSensorList(
 						Sensor.TYPE_ORIENTATION);
-				supported = new Boolean(sensors.size() > 0);
+				supported = sensors.size() > 0;
 			} else {
-				supported = Boolean.FALSE;
+				supported = false;
 			}
 		}
 		return supported;

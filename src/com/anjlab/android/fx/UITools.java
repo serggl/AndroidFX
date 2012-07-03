@@ -62,11 +62,15 @@ public class UITools {
 	}
 	
 	public static void hide(Activity ctx, int viewId) {
-		ctx.findViewById(viewId).setVisibility(View.INVISIBLE);
+		View v = ctx.findViewById(viewId);
+		if (v != null)
+			v.setVisibility(View.INVISIBLE);
 	}
 	
 	public static void show(Activity ctx, int viewId) {
-		ctx.findViewById(viewId).setVisibility(View.VISIBLE);
+		View v = ctx.findViewById(viewId);
+		if (v != null)
+			v.setVisibility(View.VISIBLE);
 	}
 	
 	public static void collapse(View view) {
@@ -157,7 +161,14 @@ public class UITools {
 
 	public static void setOnClickListener(Activity ctx, int buttonId,
 			OnClickListener listener) {
-		ctx.findViewById(buttonId).setOnClickListener(listener);
+		View v = ctx.findViewById(buttonId);
+		if (v != null)
+			v.setOnClickListener(listener);
+	}
+
+	public static void setOnClickListener(Activity ctx, int buttonId) {
+		if (ctx instanceof OnClickListener)
+			setOnClickListener(ctx, buttonId, (OnClickListener)ctx);
 	}
 	
 	public static Preference getPreference(PreferenceActivity ctx, CharSequence key) {
@@ -206,15 +217,23 @@ public class UITools {
 	}
 	
 	public static String getEditTextText(Activity ctx, int viewId) {
-		return getEditText(ctx, viewId).getText().toString();
+		return getText(ctx, viewId);
+	}
+	
+	public static String getText(Activity ctx, int viewId) {
+		return getTextView(ctx, viewId).getText().toString();
 	}
 	
 	public static void setText(Activity ctx, int textViewId, int textId){
-		getTextView(ctx, textViewId).setText(textId);
+		TextView v = getTextView(ctx, textViewId);
+		if (v != null)
+			v.setText(textId);
 	}
 	
 	public static void setText(Activity ctx, int textViewId, String text){
-		getTextView(ctx, textViewId).setText(text);
+		TextView v = getTextView(ctx, textViewId);
+		if (v != null)
+			v.setText(text);
 	}
 
 	public static SeekBar getSeekBar(Activity ctx, int viewId) {
@@ -271,21 +290,21 @@ public class UITools {
 	
 	public static void showAlertDialog(Context ctx, String title, String message, int icon, 
 			String positiveButton, String negativeButton, DialogInterface.OnClickListener okClickListener, 
-			DialogInterface.OnClickListener cancelClickListener){
-		createAlertDialog(ctx, title, message, icon, false, positiveButton, negativeButton, okClickListener, cancelClickListener).show();
+			DialogInterface.OnClickListener cancelClickListener, boolean cancelable){
+		createAlertDialog(ctx, title, message, icon, cancelable, positiveButton, negativeButton, okClickListener, cancelClickListener).show();
     }
 	
 	public static void showAlertDialog(Context ctx, int title, int message, int icon,
 			int positiveButton, int negativeButton, DialogInterface.OnClickListener okClickListener, 
-			DialogInterface.OnClickListener cancelClickListener){
+			DialogInterface.OnClickListener cancelClickListener, boolean cancelable){
     	showAlertDialog(ctx, ctx.getString(title), ctx.getString(message), icon, ctx.getString(positiveButton), 
-    			ctx.getString(negativeButton), okClickListener, cancelClickListener);
+    			ctx.getString(negativeButton), okClickListener, cancelClickListener, cancelable);
     }
 	
 	public static void showAlertDialog(Context ctx, int title, int message, int icon,
-			int positiveButton, DialogInterface.OnClickListener okClickListener) {
+			int positiveButton, DialogInterface.OnClickListener okClickListener, boolean cancelable) {
     	showAlertDialog(ctx, ctx.getString(title), ctx.getString(message), icon, ctx.getString(positiveButton), 
-    			null, okClickListener, null);
+    			null, okClickListener, null, cancelable);
     }
 	
 	public static void applyCustomRegularBoldFont(Context ctx, ViewGroup rootView, String regularFontPath, String boldFontPath) {
@@ -312,6 +331,11 @@ public class UITools {
 	
 	public static void hideKeyboard(Activity activity, int buttonId)
 	{
-		((InputMethodManager)activity.getSystemService("input_method")).hideSoftInputFromWindow(activity.findViewById(buttonId).getWindowToken(), 0);
+		hideKeyboard(activity, activity.findViewById(buttonId));
+	}
+	
+	public static void hideKeyboard(Activity activity, View view)
+	{
+		((InputMethodManager)activity.getSystemService("input_method")).hideSoftInputFromWindow(view.getWindowToken(), 0);
 	}
 }

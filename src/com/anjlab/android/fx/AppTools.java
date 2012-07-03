@@ -46,8 +46,17 @@ public class AppTools {
 		return preferences.getInt(prefName, defaultValue);
 	}
 	
+	public static long getSettingsValueAsLong(Context ctx, String prefName, long defaultValue){
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
+		return preferences.getLong(prefName, defaultValue);
+	}
+	
 	public static void setSettingsValue(Context ctx, String prefName, int value){
 		getSettingsEditor(ctx).putInt(prefName, value).commit();
+	}
+	
+	public static void setSettingsValue(Context ctx, String prefName, long value){
+		getSettingsEditor(ctx).putLong(prefName, value).commit();
 	}
 	
 	public static void setSettingsValue(Context ctx, String prefName, String value){
@@ -70,7 +79,7 @@ public class AppTools {
 	public static int getVersion(Context ctx) {
 	    int v = 0;
 	    try {
-	        v = ctx.getPackageManager().getPackageInfo(ctx.getClass().getPackage().getName(), 0).versionCode;
+	        v = ctx.getPackageManager().getPackageInfo(ctx.getApplicationContext().getPackageName(), 0).versionCode;
 	    } catch (NameNotFoundException e) {
 	        // Huh? Really?
 	    }
