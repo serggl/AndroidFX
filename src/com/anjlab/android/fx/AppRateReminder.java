@@ -1,7 +1,9 @@
 package com.anjlab.android.fx;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public abstract class AppRateReminder {
 	
@@ -72,5 +74,14 @@ public abstract class AppRateReminder {
         editor.commit();
     }
     
-    public abstract void showRateDialog(boolean commit);
+    protected abstract AlertDialog buildRateDialog(boolean commit);
+    
+    public void showRateDialog(boolean commit) {
+    	try {
+    		buildRateDialog(commit).show();
+		}
+		catch (Exception e) {
+			Log.e("AppRateReminder", e.toString());
+		}
+    }
 }

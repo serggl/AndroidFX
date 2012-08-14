@@ -64,12 +64,11 @@ public class AppTools {
 	}
 	
 	public static void openAndroidMarket(Context ctx){
-		ctx.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+ctx.getClass().getPackage().getName())));
-		//ctx.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com/search?q="+ctx.getClass().getPackage().getName())));
+		ctx.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+ctx.getApplicationContext().getClass().getPackage().getName())));
 	}
 	
 	public static String getAndroidMarketUrl(Activity ctx){
-		return "https://market.android.com/details?id="+ctx.getClass().getPackage().getName();
+		return "https://market.android.com/details?id="+ctx.getApplicationContext().getClass().getPackage().getName();
 	}
 	
 	public static void openWeb(Context ctx, String url){

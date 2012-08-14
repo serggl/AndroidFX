@@ -336,6 +336,22 @@ public class UITools {
 	
 	public static void hideKeyboard(Activity activity, View view)
 	{
-		((InputMethodManager)activity.getSystemService("input_method")).hideSoftInputFromWindow(view.getWindowToken(), 0);
+		((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
+	}
+	
+	public static void showKeyboard(Activity activity, int buttonId)
+	{
+		showKeyboard(activity, activity.findViewById(buttonId));
+	}
+	
+	public static void showKeyboard(final Activity activity, final View view)
+	{
+		view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager keyboard = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                keyboard.showSoftInput(view, 0);
+            }
+        }, 200);
 	}
 }

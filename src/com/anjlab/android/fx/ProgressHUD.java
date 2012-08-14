@@ -50,6 +50,19 @@ public class ProgressHUD
 		}
 	}
 
+	public static void update(Activity ctx, String message)
+	{
+		try {
+			if (dialogInstance == null)
+				show(ctx, message);
+			else
+				dialogInstance.setMessage(message);
+		}
+		catch (Exception ex) {
+			Log.e("HUD", String.format("Unable to update progress dialog: %s", ex.toString()));
+		}
+	}
+
 	public static void showIfNotVisible(Activity ctx, String message)
 	{
 		if (dialogInstance == null)
