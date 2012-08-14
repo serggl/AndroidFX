@@ -4,7 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 
-public class MediaTools {
+public class MediaTools extends BaseTools {
 	
 	private static boolean isMuted;
 	

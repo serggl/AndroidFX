@@ -2,7 +2,7 @@ package com.anjlab.android.fx;
 
 import java.util.regex.Pattern;
 
-public class ValidationTools {
+public class ValidationTools extends BaseTools {
 
 	public static boolean validateEmail(String email)
 	{

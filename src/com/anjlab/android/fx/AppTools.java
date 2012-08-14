@@ -8,7 +8,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 
-public class AppTools {
+public class AppTools extends BaseTools {
 	public static String getSettingsValueAsSting(Context ctx, String prefName, String defaultValue){
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
 		return preferences.getString(prefName, defaultValue);

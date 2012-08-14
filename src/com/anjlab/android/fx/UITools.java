@@ -32,7 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class UITools {
+public class UITools extends BaseTools {
 	
 	static int defaultToastGravity = Gravity.CENTER;
 	static int defaultToastDuration = Toast.LENGTH_LONG;
@@ -349,8 +349,13 @@ public class UITools {
 		view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                InputMethodManager keyboard = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-                keyboard.showSoftInput(view, 0);
+            	try {
+            		InputMethodManager keyboard = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            		keyboard.showSoftInput(view, 0);
+            	}
+            	catch (Exception ex) {
+            		LogError(ex.toString());
+            	}
             }
         }, 200);
 	}
