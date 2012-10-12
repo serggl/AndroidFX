@@ -34,7 +34,7 @@ public class ProgressHUD
 		UITools.showToastMessage(ctx, message);
 	}
 
-	public static void show(Activity ctx, String message)
+	public static void show(Context ctx, String message)
 	{
 		try {
 			if (dialogInstance != null)
@@ -48,6 +48,11 @@ public class ProgressHUD
 		catch (Exception ex) {
 			Log.e("HUD", String.format("Unable to show progress dialog: %s", ex.toString()));
 		}
+	}
+
+	public static void show(Context ctx, int messageId)
+	{
+		show(ctx, ctx.getString(messageId));
 	}
 
 	public static void update(Activity ctx, String message)

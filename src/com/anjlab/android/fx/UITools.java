@@ -67,7 +67,19 @@ public class UITools extends BaseTools {
 			v.setVisibility(View.INVISIBLE);
 	}
 	
+	public static void hide(View ctx, int viewId) {
+		View v = ctx.findViewById(viewId);
+		if (v != null)
+			v.setVisibility(View.INVISIBLE);
+	}
+	
 	public static void show(Activity ctx, int viewId) {
+		View v = ctx.findViewById(viewId);
+		if (v != null)
+			v.setVisibility(View.VISIBLE);
+	}
+	
+	public static void show(View ctx, int viewId) {
 		View v = ctx.findViewById(viewId);
 		if (v != null)
 			v.setVisibility(View.VISIBLE);
@@ -86,6 +98,11 @@ public class UITools extends BaseTools {
 		collapse(ctx.findViewById(viewId));
 	}
 	
+	public static void collapse(View ctx, int viewId) {
+		hide(ctx, viewId);
+		collapse(ctx.findViewById(viewId));
+	}
+	
 	public static void expand(View view, boolean fillParent) {
 		if (view != null) {
 			ViewGroup.LayoutParams lp = view.getLayoutParams();
@@ -99,7 +116,16 @@ public class UITools extends BaseTools {
 		show(ctx, viewId);
 	}
 	
+	public static void expand(View ctx, int viewId, boolean fillParent) {
+		expand(ctx.findViewById(viewId), fillParent);
+		show(ctx, viewId);
+	}
+	
 	public static void removeFromParentView(Activity ctx, int viewId) {
+		removeFromParentView(ctx.findViewById(viewId));
+	}
+	
+	public static void removeFromParentView(View ctx, int viewId) {
 		removeFromParentView(ctx.findViewById(viewId));
 	}
 	
@@ -131,6 +157,10 @@ public class UITools extends BaseTools {
 		return (ListView) ctx.findViewById(buttonId);
 	}
 	
+	public static ListView getListView(View ctx, int buttonId) {
+		return (ListView) ctx.findViewById(buttonId);
+	}
+	
 	public static CheckBox getCheckBox(Activity ctx, int buttonId) {
 		return (CheckBox) ctx.findViewById(buttonId);
 	}
@@ -159,8 +189,13 @@ public class UITools extends BaseTools {
 		return (Button) ctx.findViewById(buttonId);
 	}
 
-	public static void setOnClickListener(Activity ctx, int buttonId,
-			OnClickListener listener) {
+	public static void setOnClickListener(Activity ctx, int buttonId, OnClickListener listener) {
+		View v = ctx.findViewById(buttonId);
+		if (v != null)
+			v.setOnClickListener(listener);
+	}
+
+	public static void setOnClickListener(View ctx, int buttonId, OnClickListener listener) {
 		View v = ctx.findViewById(buttonId);
 		if (v != null)
 			v.setOnClickListener(listener);
@@ -224,7 +259,17 @@ public class UITools extends BaseTools {
 		return getTextView(ctx, viewId).getText().toString();
 	}
 	
+	public static String getText(View ctx, int viewId) {
+		return getTextView(ctx, viewId).getText().toString();
+	}
+	
 	public static void setText(Activity ctx, int textViewId, int textId){
+		TextView v = getTextView(ctx, textViewId);
+		if (v != null)
+			v.setText(textId);
+	}
+	
+	public static void setText(View ctx, int textViewId, int textId){
 		TextView v = getTextView(ctx, textViewId);
 		if (v != null)
 			v.setText(textId);
@@ -235,12 +280,22 @@ public class UITools extends BaseTools {
 		if (v != null)
 			v.setText(text);
 	}
+	
+	public static void setText(View ctx, int textViewId, String text){
+		TextView v = getTextView(ctx, textViewId);
+		if (v != null)
+			v.setText(text);
+	}
 
 	public static SeekBar getSeekBar(Activity ctx, int viewId) {
 		return (SeekBar) ctx.findViewById(viewId);
 	}
 	
 	public static RadioButton getRadioButton(Activity ctx, int viewId) {
+		return (RadioButton) ctx.findViewById(viewId);
+	}
+	
+	public static RadioButton getRadioButton(View ctx, int viewId) {
 		return (RadioButton) ctx.findViewById(viewId);
 	}
 	
@@ -258,6 +313,10 @@ public class UITools extends BaseTools {
 	}
 	
 	public static ImageView getImageView(Activity ctx, int viewId) {
+		return (ImageView) ctx.findViewById(viewId);
+	}
+	
+	public static ImageView getImageView(View ctx, int viewId) {
 		return (ImageView) ctx.findViewById(viewId);
 	}
 	
@@ -334,9 +393,9 @@ public class UITools extends BaseTools {
 		hideKeyboard(activity, activity.findViewById(buttonId));
 	}
 	
-	public static void hideKeyboard(Activity activity, View view)
+	public static void hideKeyboard(Context ctx, View view)
 	{
-		((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
+		((InputMethodManager)ctx.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 	}
 	
 	public static void showKeyboard(Activity activity, int buttonId)
@@ -344,12 +403,13 @@ public class UITools extends BaseTools {
 		showKeyboard(activity, activity.findViewById(buttonId));
 	}
 	
-	public static void showKeyboard(final Activity activity, final View view)
+	public static void showKeyboard(final Context activity, final View view)
 	{
 		view.postDelayed(new Runnable() {
             @Override
             public void run() {
             	try {
+            		view.requestFocus();
             		InputMethodManager keyboard = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             		keyboard.showSoftInput(view, 0);
             	}

@@ -68,6 +68,7 @@ public class IOTools {
          */
         if (length > Integer.MAX_VALUE) {
             System.out.println("File is too large to process");
+            is.close();
             return null;
         }
 
@@ -85,12 +86,13 @@ public class IOTools {
 
         }
 
+        is.close();
+        
         // Ensure all the bytes have been read in
         if (offset < bytes.length) {
             throw new IOException("Could not completely read file " + file.getName());
         }
-
-        is.close();
+        
         return bytes;
 
     }

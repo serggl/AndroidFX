@@ -71,5 +71,19 @@ public class LocationTracker implements android.location.LocationListener {
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
+	
+	public Location getLastKnownLocation(String[] preferedProviders) {
+		try {
+			for(String provider: preferedProviders)
+			if (locationManager.isProviderEnabled(provider)){
+				Location l = locationManager.getLastKnownLocation(provider);
+				if (l != null)
+					return l;
+			}
+		}
+		catch (Exception ex) {
+		}
+		return null;
+	}
 
 }
