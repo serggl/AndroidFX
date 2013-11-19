@@ -1,3 +1,7 @@
-bin/*
-gen/*
-proguard/*
+bin
+gen
+proguard
+.gradle
+build
+.idea
+out
