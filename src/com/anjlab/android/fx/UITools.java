@@ -37,24 +37,38 @@ public class UITools extends BaseTools {
 	static int defaultToastGravity = Gravity.CENTER;
 	static int defaultToastDuration = Toast.LENGTH_LONG;
 	
-	public static void showToastMessage(Context ctx, String text){
-		Toast toast = Toast.makeText(ctx, text, defaultToastDuration);
-    	toast.setGravity(defaultToastGravity, 0, 0);
-    	toast.show();
+	public static boolean showToastMessage(Context ctx, String text){
+		try {
+			Toast toast = Toast.makeText(ctx, text, defaultToastDuration);
+			toast.setGravity(defaultToastGravity, 0, 0);
+			toast.show();
+			return true;
+		} 
+		catch (Exception e)
+		{
+			return false;
+		}
 	}
 	
 	public static void showToastMessage(Context ctx, int textResId){
 		showToastMessage(ctx, ctx.getString(textResId));
 	}
 	
-	public static void showToastMessage(Context ctx, String text, int imageId){
-		Toast toast = Toast.makeText(ctx, text, defaultToastDuration);
-    	toast.setGravity(defaultToastGravity, 0, 0);
-    	LinearLayout toastView = (LinearLayout) toast.getView();
-    	ImageView imageWorld = new ImageView(ctx);
-    	imageWorld.setImageResource(imageId);
-    	toastView.addView(imageWorld, 0);
-    	toast.show();
+	public static boolean showToastMessage(Context ctx, String text, int imageId){
+		try {
+			Toast toast = Toast.makeText(ctx, text, defaultToastDuration);
+			toast.setGravity(defaultToastGravity, 0, 0);
+			LinearLayout toastView = (LinearLayout) toast.getView();
+			ImageView imageWorld = new ImageView(ctx);
+			imageWorld.setImageResource(imageId);
+			toastView.addView(imageWorld, 0);
+			toast.show();
+			return true;
+		} 
+		catch (Exception e)
+		{
+			return false;
+		}
 	}
 	
 	public static void showToastMessage(Context ctx, int textResId, int imageId){
@@ -168,9 +182,17 @@ public class UITools extends BaseTools {
 	public static CheckBox getCheckBox(View ctx, int buttonId) {
 		return (CheckBox) ctx.findViewById(buttonId);
 	}
-	
+
 	public static void setCheckBoxChecked(Activity ctx, int buttonId, boolean checked) {
-		getCheckBox(ctx, buttonId).setChecked(checked);
+		CheckBox cb = getCheckBox(ctx, buttonId);
+		if (cb != null)
+			cb.setChecked(checked);
+	}
+
+	public static void setCheckBoxChecked(View view, int buttonId, boolean checked) {
+		CheckBox cb = getCheckBox(view, buttonId);
+		if (cb != null)
+			cb.setChecked(checked);
 	}
 	
 	public static CheckedTextView getCheckedTextView(Activity ctx, int buttonId) {
@@ -216,6 +238,10 @@ public class UITools extends BaseTools {
 	}
 
 	public static Spinner getSpinner(Activity ctx, int spinnerId) {
+		return (Spinner) ctx.findViewById(spinnerId);
+	}
+
+	public static Spinner getSpinner(View ctx, int spinnerId) {
 		return (Spinner) ctx.findViewById(spinnerId);
 	}
 
@@ -308,6 +334,10 @@ public class UITools extends BaseTools {
 		return (LinearLayout) ctx.findViewById(viewId);
 	}
 	
+	public static LinearLayout getLinearLayout(View ctx, int viewId) {
+		return (LinearLayout) ctx.findViewById(viewId);
+	}
+	
 	public static RelativeLayout getRelativeLayout(Activity ctx, int viewId) {
 		return (RelativeLayout) ctx.findViewById(viewId);
 	}
@@ -347,23 +377,68 @@ public class UITools extends BaseTools {
     	return alertDialog.create();
     }
 	
-	public static void showAlertDialog(Context ctx, String title, String message, int icon, 
+	public static AlertDialog createAlertDialog(Context ctx, String title, View messageView, int icon, 
+			boolean cancelable, String positiveButton, String negativeButton, DialogInterface.OnClickListener okClickListener, 
+			DialogInterface.OnClickListener cancelClickListener){
+    	AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
+    	alertDialog.setTitle(title);
+    	alertDialog.setView(messageView);
+    	alertDialog.setCancelable(cancelable);
+    	if (icon != 0)
+    		alertDialog.setIcon(icon);
+    	alertDialog.setPositiveButton(positiveButton, okClickListener);
+    	if (negativeButton != null)
+    		alertDialog.setNegativeButton(negativeButton, cancelClickListener);
+    	return alertDialog.create();
+    }
+	
+	public static boolean showAlertDialog(Context ctx, String title, View view, int icon, 
 			String positiveButton, String negativeButton, DialogInterface.OnClickListener okClickListener, 
 			DialogInterface.OnClickListener cancelClickListener, boolean cancelable){
-		createAlertDialog(ctx, title, message, icon, cancelable, positiveButton, negativeButton, okClickListener, cancelClickListener).show();
+		try {
+			createAlertDialog(ctx, title, view, icon, cancelable, positiveButton, negativeButton, okClickListener, cancelClickListener).show();
+		} 
+		catch (Exception e) {
+			return false;
+		}
+		return true;
     }
 	
-	public static void showAlertDialog(Context ctx, int title, int message, int icon,
+	public static boolean showAlertDialog(Context ctx, String title, String message, int icon, 
+			String positiveButton, String negativeButton, DialogInterface.OnClickListener okClickListener, 
+			DialogInterface.OnClickListener cancelClickListener, boolean cancelable){
+		try {
+			createAlertDialog(ctx, title, message, icon, cancelable, positiveButton, negativeButton, okClickListener, cancelClickListener).show();
+		} 
+		catch (Exception e) {
+			return false;
+		}
+		return true;
+    }
+	
+	public static boolean showAlertDialog(Context ctx, int title, int message, int icon,
 			int positiveButton, int negativeButton, DialogInterface.OnClickListener okClickListener, 
 			DialogInterface.OnClickListener cancelClickListener, boolean cancelable){
-    	showAlertDialog(ctx, ctx.getString(title), ctx.getString(message), icon, ctx.getString(positiveButton), 
-    			ctx.getString(negativeButton), okClickListener, cancelClickListener, cancelable);
+		try {
+			showAlertDialog(ctx, ctx.getString(title), ctx.getString(message), icon, ctx.getString(positiveButton), 
+				ctx.getString(negativeButton), okClickListener, cancelClickListener, cancelable);
+		} 
+		catch (Exception e) {
+			return false;
+		}
+		return true;
     }
 	
-	public static void showAlertDialog(Context ctx, int title, int message, int icon,
+	public static boolean showAlertDialog(Context ctx, int title, int message, int icon,
 			int positiveButton, DialogInterface.OnClickListener okClickListener, boolean cancelable) {
-    	showAlertDialog(ctx, ctx.getString(title), ctx.getString(message), icon, ctx.getString(positiveButton), 
-    			null, okClickListener, null, cancelable);
+		try {
+			showAlertDialog(ctx, ctx.getString(title), ctx.getString(message), icon, ctx.getString(positiveButton), 
+					null, okClickListener, null, cancelable);
+		} 
+		catch (Exception e) {
+			return false;
+		}
+		return true;
     }
 	
 	public static void applyCustomRegularBoldFont(Context ctx, ViewGroup rootView, String regularFontPath, String boldFontPath) {

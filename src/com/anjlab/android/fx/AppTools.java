@@ -84,4 +84,13 @@ public class AppTools extends BaseTools {
 	    }
 	    return v;
 	}
+	
+	public static String getVersionName(Context ctx) {
+	    try {
+	        return ctx.getPackageManager().getPackageInfo(ctx.getApplicationContext().getPackageName(), 0).versionName;
+	    } catch (NameNotFoundException e) {
+	        // Huh? Really?
+	    }
+	    return "";
+	}
 }
