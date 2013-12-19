@@ -3,5 +3,5 @@
       package="com.anjlab.android.fx"
       android:versionCode="1"
       android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="18" />
+    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="19" />
 </manifest>

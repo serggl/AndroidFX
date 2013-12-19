@@ -3,14 +3,14 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.+'
+        classpath 'com.android.tools.build:gradle:0.7.+'
         classpath 'com.github.dcendents:android-maven-plugin:1.0'
     }
 }
 apply plugin: 'android-library'
 apply plugin: 'android-maven'
 
-version '1.0.1'
+version '1.0.2'
 group 'com.anjlab.android'
 
 android {
@@ -19,7 +19,7 @@ android {
 
     defaultConfig {
         minSdkVersion 3
-        targetSdkVersion 18
+        targetSdkVersion 19
     }
     sourceSets {
         main {
@@ -29,7 +29,6 @@ android {
             aidl.srcDirs = ['src']
             renderscript.srcDirs = ['src']
             res.srcDirs = ['res']
-            assets.srcDirs = ['assets']
         }
 
         instrumentTest.setRoot('tests')
