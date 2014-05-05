@@ -194,14 +194,22 @@ public class UITools extends BaseTools {
 		if (cb != null)
 			cb.setChecked(checked);
 	}
-	
-	public static CheckedTextView getCheckedTextView(Activity ctx, int buttonId) {
-		return (CheckedTextView) ctx.findViewById(buttonId);
-	}
-	
-	public static boolean getCheckedTextViewChecked(Activity ctx, int buttonId) {
-		return getCheckedTextView(ctx, buttonId).isChecked();
-	}
+
+    public static CheckedTextView getCheckedTextView(Activity ctx, int buttonId) {
+        return (CheckedTextView) ctx.findViewById(buttonId);
+    }
+
+    public static CheckedTextView getCheckedTextView(View view, int buttonId) {
+        return (CheckedTextView) view.findViewById(buttonId);
+    }
+
+    public static boolean getCheckedTextViewChecked(Activity ctx, int buttonId) {
+        return getCheckedTextView(ctx, buttonId).isChecked();
+    }
+
+    public static boolean getCheckedTextViewChecked(View view, int buttonId) {
+        return getCheckedTextView(view, buttonId).isChecked();
+    }
 	
 	public static void setCheckedTextViewChecked(Activity ctx, int buttonId, boolean checked) {
 		getCheckedTextView(ctx, buttonId).setChecked(checked);
