@@ -1,14 +1,11 @@
 package com.anjlab.android.fx.c2dm;
 
-import com.anjlab.android.fx.AppTools;
-
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.anjlab.android.fx.AppTools;
 
 /*
  append these lines to your manifest file:
@@ -93,13 +90,4 @@ public abstract class C2dmReceiver extends BroadcastReceiver {
 	}
 
 	protected abstract void onMessageReceived(Context context, Intent intent);
-
-	protected void displayNotification(Context ctx, int iconResId, String title, String message, Intent intent, int id) {
-		NotificationManager mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-		Notification notification = new Notification(iconResId, message, System.currentTimeMillis());
-		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-		PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-		notification.setLatestEventInfo(ctx, title, message, contentIntent);
-		mNotificationManager.notify(id, notification);
-	}
 }

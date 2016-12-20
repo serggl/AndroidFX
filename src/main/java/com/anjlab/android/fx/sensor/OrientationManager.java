@@ -1,12 +1,12 @@
 package com.anjlab.android.fx.sensor;
 
-import java.util.List;
-
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+
+import java.util.List;
 
 public class OrientationManager {
 
@@ -31,6 +31,7 @@ public class OrientationManager {
 
 	/**
 	 * Returns true if the manager is listening to orientation changes
+	 * @return boolean
 	 */
 	public static boolean isListening() {
 		return running;
@@ -50,6 +51,8 @@ public class OrientationManager {
 
 	/**
 	 * Returns true if at least one Orientation sensor is available
+	 * @param ctx Context
+	 * @return boolean
 	 */
 	public static boolean isSupported(Context ctx) {
 		if (supported == null) {
@@ -67,6 +70,8 @@ public class OrientationManager {
 
 	/**
 	 * Registers a listener and start listening
+	 * @param ctx Context
+	 * @param orientationListener OrientationListener
 	 */
 	public static void startListening(Context ctx, OrientationListener orientationListener) {
 		if (!running) {
