@@ -88,6 +88,11 @@ public class LocationTracker implements android.location.LocationListener {
 		return null;
 	}
 
+	public void setTimeout(int value)
+	{
+		this.timeout = value;
+	}
+
 	public int getMinTime() {
 		return minTime;
 	}

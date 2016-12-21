@@ -11,7 +11,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-version '1.0.8'
+version '1.0.9'
 group 'com.anjlab.android'
 
 android {
